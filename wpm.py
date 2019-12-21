@@ -15,9 +15,8 @@ debug = open("debug.txt","w")
 def main():
     textContent = browser.find_element_by_id('wordlist').get_attribute('textContent')
     wordList = cleanUp(textContent)
-    for item in wordList:
-        print(item)
-        parseWord(item)
+    for i in range(len(wordList)):
+        parseWord(wordList[i])
     
 
     browser.quit() 
@@ -26,7 +25,6 @@ def parseWord(word):
     time.sleep(1.0) 
     assert type(word) is str
     for letter in word: 
-        print(letter)
         actions.send_keys(letter) #word
     actions.send_keys(Keys.SPACE).perform() #Spacebar
     
