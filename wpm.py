@@ -1,24 +1,27 @@
 from selenium import webdriver 
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.action_chains import ActionChains
 import time
 import sys 
 
+#Implement timer to break after 60 seconds 
+
 browser = webdriver.Firefox()
 browser.get("https://10fastfingers.com/typing-test/english")
-actions = ActionChains(browser)
 inputBox = browser.switch_to_active_element()
-debug = open("debug.txt","w") 
+minute = 60
 
 def main():
+    wpm = sys.argv[1]
     textContent = browser.find_element_by_id('wordlist').get_attribute('textContent')
     wordList = cleanUp(textContent)
-    print(wordList)
-    for word in wordList:
-        parseWord(word)
- 
-    
+    t = time.time() + minute
+    #Stop sending keys after one minute 
+    while time.time() < t: 
+        for word in wordList:
+            time.sleep(0.250)
+            parseWord(word)
+
 def parseWord(word):  
     assert type(word) is str
     for letter in word: 
