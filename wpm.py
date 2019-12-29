@@ -3,13 +3,10 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 import time
 import sys 
-#To do:
-#Navigate through logging in etc    
-#Implement Recaptcha bypass 
-#un:fastfingersbot@gmail.com   pw:Squat5buckets! 
-#un:definitleynotabot pw:notabot1
-
-#0.1s delay ~ 327 wpm 
+#To do:   
+#Bypass anticheat
+#0.1s delay ~ 330 wpm (5 keystrokes=1 word)
+ 
 driver = webdriver.Firefox()
 driver.get("https://10fastfingers.com/typing-test/english")
 email = "fastfingersbot@gmail.com"
@@ -18,19 +15,17 @@ lPath = "/html/body/div[4]/div/div[4]/div/div[1]/div[5]/div[1]/div[1]/a"
 ePath = "//*[@id='UserEmail']"
 pPath = "//*[@id='UserPassword']"
 
-
 def main():
     logIn()
     time.sleep(5)
     textContent = driver.find_element_by_id('wordlist').get_attribute('textContent')
     wordList = cleanUp(textContent)
-    limit = time.time() + 60
-
+    #Fix the timeout 
+    limit = time.time() + 60 
     while time.time() < limit: 
         for word in wordList:
-            time.sleep(0.15)
+            time.sleep(0.1)
             parseWord(word)
-    
 
 def logIn():
     temp = driver.find_element_by_xpath(lPath)
