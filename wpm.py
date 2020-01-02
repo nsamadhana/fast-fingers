@@ -5,7 +5,7 @@ import time
 import sys 
 #To do:   
 #Bypass anticheat
-#0.1s delay ~ 330 wpm (5 keystrokes=1 word)
+#0.1s delay ~ 300 wpm (5 keystrokes=1 word)
  
 driver = webdriver.Firefox()
 driver.get("https://10fastfingers.com/typing-test/english")
@@ -14,18 +14,21 @@ password = "notabot1"
 lPath = "/html/body/div[4]/div/div[4]/div/div[1]/div[5]/div[1]/div[1]/a"
 ePath = "//*[@id='UserEmail']"
 pPath = "//*[@id='UserPassword']"
+nPath = "/html/body/div[2]/div/nav/div[2]/ul[4]/li[2]/span[1]/a"
+aPath = "/html/body/div[3]/div/div/div[2]/ul/li/a"
+acPath = "/html/body/div[4]/div[1]/div[4]/div/div/div[1]/table/tbody/tr[1]/td[1]/a"
+startPath = "//*[@id='start-btn']"
 
 def main():
     logIn()
-    time.sleep(5)
+    time.sleep(3)
     textContent = driver.find_element_by_id('wordlist').get_attribute('textContent')
     wordList = cleanUp(textContent)
-    #Fix the timeout 
-    limit = time.time() + 60 
-    while time.time() < limit: 
-        for word in wordList:
-            time.sleep(0.1)
-            parseWord(word)
+    
+    for word in wordList:
+        time.sleep(0.1)
+        parseWord(word)
+        step += 1 
 
 def logIn():
     temp = driver.find_element_by_xpath(lPath)
