@@ -30,26 +30,29 @@ def main():
     time.sleep(1)
     logIn() 
     time.sleep(3)
-    '''
+    
     textContent = driver.find_element_by_id('wordlist').get_attribute('textContent')
     wordList = cleanUp(textContent)
+    '''
     for word in wordList:
         time.sleep(0.1)
-        parseWord(word)
-       ''' 
+        typeWord(word)
+    '''
     driver.find_element_by_xpath(nPath).click() 
     driver.find_element_by_xpath(aPath).click()
     driver.find_element_by_xpath(acPath).click()
-    driver.find_element_by_id("start-btn").click()
+    driver.find_element_by_id("start-btn").click()  
     #Parse image to text here
     imgUrl = driver.find_element_by_xpath(imgPath).get_attribute("src")
+    print(imgUrl)
     text = imgParser(imgUrl)
-    text.split()
-    print(text)
+    words = text.split()
     #Switch back to first tab 
     driver.switch_to.window(driver.window_handles[0])
+    for each in words: 
+        typeWord(each)
+    driver.switch_to.active_element.send_Keys(Keys.TAB + Keys.ENTER)
 
-    
 def logIn():
     driver.find_element_by_xpath(lPath).click()
     em = driver.find_element_by_xpath(ePath)
@@ -60,7 +63,7 @@ def logIn():
     pw.send_keys(password)
     pw.send_keys(Keys.ENTER)
 
-def parseWord(word):  
+def typeWord(word):  
     assert type(word) is str
     for letter in word: 
         driver.switch_to.active_element.send_keys(letter)
